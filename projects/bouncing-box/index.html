@@ -15,7 +15,7 @@
 			display: block;
 			position: absolute;
 			top: 100px;
-			left: 30px;  /* <--- Change me! */
+			left: 0px;  /* <--- Change me! */
 		}
 		.board{
 			height: 100vh;
@@ -54,7 +54,7 @@
 
 			// changes the text displayed on the Box
 			function changeBoxText(newText) {
-				box.text(newText);
+				box.text(boardWidth);
 			}
 
 			//////////////////////////////////////////////////////////////////
@@ -62,7 +62,7 @@
 			//////////////////////////////////////////////////////////////////
 			
 			// TODO 2 - Variable declarations 
-			
+			var positionX = 0;
 
 			
 			/* 
@@ -71,7 +71,8 @@
 			turn it around! 
 			*/
 			function update() {
-				
+				positionX = positionX + 10
+				moveBoxTo(positionX)
 
 			};
 
