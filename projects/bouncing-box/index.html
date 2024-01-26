@@ -5,6 +5,8 @@
 	<title>Bouncing Box</title>
 	<script src="jquery.min.js"></script>
 	<style>
+
+
 		.box {
 			width: 70px;
 			height: 70px;
@@ -20,6 +22,10 @@
 		.board{
 			height: 100vh;
 		}
+		body {
+ background-image: url("../../Images/drKEW.jpeg");
+ background-color: #cccccc;
+}
 	</style>
 	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 
@@ -40,7 +46,7 @@
 			var box = jQuery('.box');	// reference to the HTML .box element
 			var board = jQuery('.board');	// reference to the HTML .board element
 			var boardWidth = board.width();	// the maximum X-Coordinate of the screen
-
+			var boardHeight = jQuery(window).height(); 
 			// Every 50 milliseconds, call the update Function (see below)
 			setInterval(update, 50);
 			
@@ -48,9 +54,10 @@
 			box.on('click', handleBoxClick);
 
 			// moves the Box to a new position on the screen along the X-Axis
-			function moveBoxTo(newPositionX) {
-				box.css("left", newPositionX);
-			}
+			function moveBoxTo(newPositionX, newPositionY) {
+      		box.css('left', newPositionX);
+      		box.css('top', newPositionY);
+  			}
 
 			// changes the text displayed on the Box
 			function changeBoxText(newText) {
@@ -66,6 +73,7 @@
 			var positionY = 0;
 			var points = 0;
 			var speed = 10;
+			var speedY = 10;
 			
 			/* 
 			This Function will be called 20 times/second. Each time it is called,
@@ -75,7 +83,20 @@
 			function update() {
 				// we wanna increase the value of positionX by 10
 				positionX = positionX + speed
-				moveBoxTo(positionX)
+				positionY = positionY + speedY
+				moveBoxTo(positionX, positionY)
+                if (positionX > boardWidth) {
+                speed = -speed
+			} if (positionX < 0) { 
+				speed = -speed
+			} if (positionY > boardHeight){
+				speedY = -speedY;
+			} if (positionY < 0 -85){
+				speedY = -speedY;
+			};
+
+				
+
 
 
 				
