@@ -25,31 +25,12 @@ function runProgram(){
     S: 83,
   }
   
-  function Walker(id, xPos, yPos, speedX, speedY, width, height){
-    let obj = {
-      id: id,
-      xPos: xPos,
-      yPos: yPos,
-      speedX: speedX,
-      speedY: speedY,
-      width: width,
-      height: height,
-    }
- return obj;
-  }
+
   var walker =  Walker("#walker", 0, 0, 0, 0, WALKER_WIDTH, WALKER_HEIGHT)
   var walker2 =  Walker("#walker2", BOARD_WIDTH - WALKER_WIDTH, BOARD_HEIGHT - WALKER_HEIGHT, 0, 0, WALKER_WIDTH, WALKER_HEIGHT)
 
   // Game Item Objects
-  var walker = {
-    xPos: 0,
-    yPos: 0,
-    speedX: 0,
-    speedY: 0,
-    width: WALKER_WIDTH,
-    height: WALKER_HEIGHT,
-  }
-  
+
 
 
   // one-time setup
@@ -68,9 +49,12 @@ function runProgram(){
   by calling this function and executing the code inside.
   */
   function newFrame() {
-    repositionGameItem();
-    redrawGameItem();
-    wallCollision();
+    repositionGameItem(walker);
+    repositionGameItem(walker2);
+    redrawGameItem(walker);
+    redrawGameItem(walker2);
+    wallCollision(walker);
+    wallCollision(walker2);
     handleCollision(true);
   }
   
@@ -127,38 +111,39 @@ function runProgram(){
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  function repositionGameItem(){
-    walker.xPos += walker.speedX;
-    walker.yPos += walker.speedY;
-    
-    walker2.xPos += walker2.speedX;
-    walker2.yPos += walker2.speedY;
-  }
-  
-  function redrawGameItem(){
-    $("#walker").css("left", walker.xPos);
-    $("#walker").css("top", walker.yPos);
-    
-    $("#walker2").css("left", walker2.xPos);
-    $("#walker2").css("top", walker2.yPos);
-  }
-  
-  function wallCollision(){
-    if(walker.xPos > BOARD_WIDTH - WALKER_WIDTH || walker.xPos < 0){
-      walker.xPos -= walker.speedX;
-    } 
-    
-    if(walker.yPos < 0||walker.yPos > BOARD_HEIGHT - WALKER_HEIGHT ){
-      walker.yPos -= walker.speedY;
+  function Walker(id, xPos, yPos, speedX, speedY, width, height){
+    let obj = {
+      id: id,
+      xPos: xPos,
+      yPos: yPos,
+      speedX: speedX,
+      speedY: speedY,
+      width: width,
+      height: height,
     }
+  return obj;
+  }
 
+
+  function repositionGameItem(obj){
+    obj.xPos += obj.speedX;
+    obj.yPos += obj.speedY;
+  }
+  
+  function redrawGameItem(obj){
+    $(obj.id).css("left", obj.xPos);
+    $(obj.id).css("top", obj.yPos);
     
-        if(walker2.xPos > BOARD_WIDTH - WALKER_WIDTH || walker2.xPos < 0){
-      walker2.xPos -= walker2.speedX;
+
+  }
+  
+  function wallCollision(obj){
+    if(obj.xPos > BOARD_WIDTH - WALKER_WIDTH || obj.xPos < 0){
+      obj.xPos -= obj.speedX;
     } 
     
-    if(walker2.yPos < 0||walker2.yPos > BOARD_HEIGHT - WALKER_HEIGHT ){
-      walker2.yPos -= walker2.speedY;
+    if(obj.yPos < 0||obj.yPos > BOARD_HEIGHT - WALKER_HEIGHT ){
+      obj.yPos -= obj.speedY;
     }
   }
   
