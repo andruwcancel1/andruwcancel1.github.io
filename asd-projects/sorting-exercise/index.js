@@ -14,15 +14,61 @@ The CSS ids you will work with are:
 ///////////////////////////////////////////////////////////////////////
 
 // TODO 2: Implement bubbleSort
-
+// Sort every element inside the array from smallest to largest and update the smart counter
+async function bubbleSort(array){
+    for(let i = 0; i < array.length - 1; i++){ // Goes through the array
+        for(let j = array.length - 1; j > 1; j--){ // Sorts through the end of the array, compares the 2 elements next to eachother, and when it updates it moves backwards sorting from the end to the beginning.
+            if(array[j].value < array[j - 1].value){ //If the current value is less than the value of the previous element it swaps the element so the bigger element goes to the end of the array
+                swap(array, j, j - 1); //swaps arrays
+                updateCounter(bubbleCounter); // updates movecount so we can see how many swaps are occuring
+                await sleep(); //Pauses the action so we can see it happen
+            }
+        }
+    }
+}
 
 // TODO 3: Implement quickSort
+async function quickSort(array, left, right){
+    if(right - left < 0){ // checks If right index is greated than the left there is no need to sort it so it stops
+        return;
+    }
 
-
+    var index = await partition(array, left, right);
+    if(left < index - 1){
+        await quickSort(array, left, index - 1);
+    } 
+    
+    if(right > index){
+        await quickSort(array, index, right);
+    }
+}
 // TODOs 4 & 5: Implement partition
+async function partition(array, left, right){
+    let pivot = array[Math.floor((right + left) / 2)].value; //Creates a var called pivot that selects the pivot amount by finding the middle index for our pivot
+    while (left < right){
+        while(array[left].value < pivot){
+            left++;
+        }
+        while(array[right].value > pivot){
+                right--;
+            }
+        if(left < right){
+            swap(array, left, right);
+            updateCounter(quickCounter)
+            await sleep();
 
+        }
+    }
+    return left + 1;
+}
 
 // TODO 1: Implement swap
+function swap(array, i, j){
+    var tempVar = array[i]; //stores the OG value of array[i]
+    array[i] = array[j]; //array[j] is stored in index[i]
+    array[j] = tempVar; //the OG value of array[i] is stored in array[j]
+    drawSwap(array, i, j); //Creates a visual for the arrays swapping YIPYAR!!!!
+}
 
 
 ///////////////////////////////////////////////////////////////////////
