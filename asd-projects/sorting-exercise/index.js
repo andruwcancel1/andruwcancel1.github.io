@@ -33,33 +33,33 @@ async function quickSort(array, left, right){
         return;
     }
 
-    var index = await partition(array, left, right);
-    if(left < index - 1){
+    var index = await partition(array, left, right); // Partitions the array and gets the pivot index
+    if(left < index - 1){ //Sorts the left side
         await quickSort(array, left, index - 1);
     } 
     
-    if(right > index){
+    if(right > index){ //Sorts the right side
         await quickSort(array, index, right);
     }
 }
 // TODOs 4 & 5: Implement partition
 async function partition(array, left, right){
     let pivot = array[Math.floor((right + left) / 2)].value; //Creates a var called pivot that selects the pivot amount by finding the middle index for our pivot
-    while (left < right){
-        while(array[left].value < pivot){
+    while (left < right){ //while the left value is less than the right value continue doing this code
+        while(array[left].value < pivot){ //Moves the left image to the right
             left++;
         }
-        while(array[right].value > pivot){
+        while(array[right].value > pivot){ //Moves the right pointer to the left
                 right--;
             }
-        if(left < right){
-            swap(array, left, right);
+        if(left < right){ //if left is less than the right value swap.
+            swap(array, left, right); 
             updateCounter(quickCounter)
             await sleep();
 
         }
     }
-    return left + 1;
+    return left + 1; //Returns the partition index to quickSort
 }
 
 // TODO 1: Implement swap
