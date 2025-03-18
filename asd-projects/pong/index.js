@@ -107,13 +107,15 @@ function runProgram(){
     obj.y += obj.speedY;
   }
 
+
+
   function wallCollision(obj){
-    if(obj.xPos > BOARD_WIDTH - WALKER_WIDTH || obj.xPos < 0){
-      obj.xPos -= obj.speedX;
+    if(obj.x > BOARD_WIDTH - obj.w || obj.x < 0){
+      obj.x -= obj.speedX;
     } 
     
-    if(obj.yPos < 0||obj.yPos > BOARD_HEIGHT - WALKER_HEIGHT ){
-      obj.yPos -= obj.speedY;
+    if(obj.y < 0||obj.y > BOARD_HEIGHT - obj.h ){
+      obj.y -= obj.speedY;
     }
   }
 
