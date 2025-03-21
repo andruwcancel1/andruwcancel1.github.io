@@ -57,9 +57,11 @@ function runProgram(){
     updateGameItem(paddleRight);
     drawGameItem(ball);
     updateGameItem(ball);
-    wallCollision(paddleLeft)
-    wallCollision(paddleRight)
-    wallCollision(ball)
+    wallCollision(paddleLeft);
+    wallCollision(paddleRight);
+
+    ballCollision(ball);
+
   }
 
 
@@ -117,7 +119,21 @@ function runProgram(){
     if(obj.y < 0||obj.y > BOARD_HEIGHT - obj.h ){
       obj.y -= obj.speedY;
     }
+  } 
+  
+  function ballCollision(obj){
+
+    if(obj.y < 0||obj.y > BOARD_HEIGHT - obj.h ){
+      obj.speedY = -1 * obj.speedY
+    } 
+    if(obj.x > BOARD_WIDTH - obj.w || obj.x < 0){
+      obj.x = BOARD_WIDTH/2 - obj.w/2
+      obj.y = BOARD_HEIGHT/2 - obj.h/2
+      obj.speedX = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1)
+      obj.speedY = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -3 : 3)
+    } 
   }
+
 
   //check boundaries of game items
   //determine if objects collide
