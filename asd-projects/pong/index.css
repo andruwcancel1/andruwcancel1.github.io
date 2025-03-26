@@ -14,7 +14,7 @@ body {
 
 
 .paddle{
-  background-color: teal;
+  background-color: rgb(255, 255, 255);
   width: 30px;
   height: 110px;
   border-radius: 15px;
@@ -40,3 +40,25 @@ body {
   left: 435px; 
   top: 220px; 
 }
+
+
+/*
+.score {
+  position: absolute;
+  font-size: large;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+  transform: translateX(-50%);
+}
+
+#pointsLeft{
+  top: 10px;
+  left: 24.5%;
+}
+
+#pointsRight{
+  top: 10px;
+  left: 65.5%;
+}
+
+*/
