@@ -61,8 +61,7 @@ function runProgram(){
     wallCollision(paddleRight);
     ballCollision(ball);
 
-    doCollide(paddleLeft, ball)
-    handleCollision(true)
+    paddleCollision(ball);
 
   }
 
@@ -134,50 +133,29 @@ function runProgram(){
     } 
   }
 
-  function doCollide(obj, obj2) {
-    // TODO: calculate and store the remaining
-    // sides of the obj
-    obj.leftX = obj.xPos;
-    obj.topY = obj.yPos;
-    obj.rightX = obj.xPos + obj.width;
-    obj.bottomY = obj.yPos + obj.height;
-    
-    // TODO: Do the same for obj2
-       
-    obj2.leftX = obj2.xPos;
-    obj2.topY = obj2.yPos;
-    obj2.rightX = obj2.xPos + obj2.width;
-    obj2.bottomY = obj2.yPos + obj2.height;
-
-    // TODO: Return true if they are overlapping, false otherwise
-	if(
-    
-      obj2.rightX > obj.leftX && 
-      obj2.leftX < obj.rightX &&
-      obj2.bottomY > obj.topY &&
-      obj2.topY < obj.bottomY 
-    ){
-      return true
-    } else {
-      return false
+  function paddleCollision(obj){
+    if(obj.x < paddleLeft.x + paddleLeft.w && obj.y > paddleLeft.y && obj.y < paddleLeft.y + paddleLeft.h){
+      obj.speedX = -obj.speedX;
     }
+    if(obj.x + obj.w > paddleRight.x && obj.y > paddleRight.y && obj.y < paddleRight.y + paddleRight.h){
+      obj.speedX = -obj.speedX;
+    }
+     } 
 
-    function handleCollision(Boolean){
-
-      var isTrue = Boolean
-      
-        if(doCollide(paddleLeft, ball)&& isTrue === true){
-          ball.speedY = -1 * ball.speedY
-      
-        }
-      
-      }
-		
+/*  function paddleCollision(obj){
+    if(obj.x < leftPaddle.x + leftPaddle.width && obj.y > leftPaddle.y && obj.y < leftPaddle.y + leftPaddle.height){
+      obj.speedX = -obj.speedX;
+    }
+    if(obj.x + obj.width > rightPaddle.x && obj.y > rightPaddle.y && obj.y < rightPaddle.y + rightPaddle.height){
+      obj.speedX = -obj.speedX;
+    }
+  }
+*/
 }
 
   function updateScore(obj){
-    if (obj.x < 0){
-      
+    if (obj.x < paddleleft.x){
+      obj.x -= obj.speedX; 
     }
   }
 
@@ -198,4 +176,4 @@ function runProgram(){
     $(document).off();
   }
   
-}
+
