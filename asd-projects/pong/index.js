@@ -12,6 +12,16 @@ function runProgram(){
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
   const BOARD_WIDTH = $("#board").width();
   const BOARD_HEIGHT = $("#board").height();
+  var score1 = 0
+  var score2 = 0
+
+  function textObj(id){
+    return {
+      id: $(id),
+      text: 0,
+    }
+    
+  }
   // Game Item Objects
   const KEY = {
     W: 87,
@@ -63,6 +73,7 @@ function runProgram(){
 
     paddleCollision(ball);
 
+    updateScore(ball);
   }
 
 
@@ -141,26 +152,23 @@ function runProgram(){
       obj.speedX = -obj.speedX;
     }
      } 
-
-/*  function paddleCollision(obj){
-    if(obj.x < leftPaddle.x + leftPaddle.width && obj.y > leftPaddle.y && obj.y < leftPaddle.y + leftPaddle.height){
-      obj.speedX = -obj.speedX;
-    }
-    if(obj.x + obj.width > rightPaddle.x && obj.y > rightPaddle.y && obj.y < rightPaddle.y + rightPaddle.height){
-      obj.speedX = -obj.speedX;
-    }
-  }
-*/
-}
+    
 
   function updateScore(obj){
-    if (obj.x < paddleleft.x){
-      obj.x -= obj.speedX; 
+
+    if(obj.x > BOARD_WIDTH){
+      console.log("right");
+      score1 = score1 + 1
+      $("#score1").text(score1)
+    } if(obj.x < 0 ){
+      console.log("left");
+      score2 = score2 + 1
+      $("#score2").text(score2)
     }
   }
 
 
-  //check boundaries of game items
+  //check boundaries of game itemsr
   //determine if objects collide
   //handle what happens when the ball hits the wall
   //handle what happens when the ball hits the paddles 
@@ -176,4 +184,4 @@ function runProgram(){
     $(document).off();
   }
   
-
+}

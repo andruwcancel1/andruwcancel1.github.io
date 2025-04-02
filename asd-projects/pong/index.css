@@ -3,13 +3,13 @@ body {
   background-color: rgb(36, 97, 146);
 }
 
-#board {
-  align-content: center;
-  width: 900px;
+#board { 
+  width: 800px;
   height: 500px;
   border: 1px solid white;
   background-color: black;
   position: relative;
+  margin: auto
 }
 
 
@@ -28,7 +28,7 @@ body {
 }
 
 #paddleRight {
-  left: 855px; 
+  left: 760px; 
   top: 150px;   
 }
 
@@ -45,4 +45,26 @@ body {
 h1 {
   text-align: center;
 color: rgb(255, 255, 255);
+}
+
+#scoreBoard {
+  width: 800px;
+  height: 150px;
+  border: 1px solid white;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  margin: auto;
+  justify-content: space-around;
+  align-items: center;
+}
+.score1 {
+  color: rgb(0, 0, 0);
+  font-size: 40px;
+
+  position: relative;
+}
+.score2 {
+  color: rgb(0, 0, 0);
+  font-size: 40px;
+  position: relative;
 }
