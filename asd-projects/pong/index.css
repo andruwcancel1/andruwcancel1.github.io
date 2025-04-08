@@ -1,25 +1,28 @@
-
 body {
-  background-color: rgb(36, 97, 146);
+  background: linear-gradient(135deg, #245f92, #0a2e4e);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 #board { 
   width: 800px;
   height: 500px;
-  border: 1px solid white;
-  background-color: black;
+  border: 2px solid white;
+  background: radial-gradient(circle at center, #000000 60%, #1a1a1a);
   position: relative;
-  margin: auto
+  margin: 20px auto;
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  border-radius: 10px;
 }
 
-
-
-.paddle{
-  background-color: rgb(255, 255, 255);
-  width: 30px;
+.paddle {
+  background: linear-gradient(145deg, #ffffff, #dcdcdc);
+  width: 60px;
   height: 110px;
-  border-radius: 15px;
+  border-radius: 20px;
   position: absolute;
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
 }
 
 #paddleLeft {
@@ -28,43 +31,107 @@ body {
 }
 
 #paddleRight {
-  left: 760px; 
+  left: 730px; 
   top: 150px;   
 }
 
 #ball {
-  background-color: white;
+  background: white;
   width: 30px;
   height: 30px;
-  border-radius: 50px;
+  border-radius: 50%;
   position: absolute;
   left: 435px; 
-  top: 220px; 
+  top: 220px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.6);
 }
 
 h1 {
   text-align: center;
-color: rgb(255, 255, 255);
+  color: white;
+  font-size: 48px;
+  margin-top: 20px;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
 }
 
 #scoreBoard {
   width: 800px;
-  height: 150px;
-  border: 1px solid white;
-  background-color: rgb(255, 255, 255);
-  position: relative;
-  margin: auto;
+  height: 120px;
+  border: 2px solid white;
+  background: linear-gradient(to right, #ffffff, #e0e0e0);
+  display: flex;
   justify-content: space-around;
   align-items: center;
+  position: relative;
+  margin: 0 auto 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
-.score1 {
-  color: rgb(0, 0, 0);
-  font-size: 40px;
 
-  position: relative;
+#score1, #score2 {
+  color: #000000;
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+  width: 100px;
 }
-.score2 {
-  color: rgb(0, 0, 0);
-  font-size: 40px;
-  position: relative;
+
+#winnerPopup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: radial-gradient(circle, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.5s ease-out;
 }
+
+#popupContent {
+  background: linear-gradient(145deg, #ffffff, #d4d4d4);
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  text-align: center;
+  animation: slideUp 0.5s ease-out;
+}
+
+#winnerText {
+  font-size: 36px;
+  font-weight: 900;
+  color: #222;
+  margin-bottom: 25px;
+  text-shadow: 2px 2px #ffcb05;
+}
+
+#restart {
+  padding: 12px 28px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #2d89ef;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25);
+}
+
+#restart:hover {
+  background-color: #1a5fb4;
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0 }
+  to { transform: translateY(0); opacity: 1 }
+}
+
