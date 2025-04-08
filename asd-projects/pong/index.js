@@ -10,12 +10,12 @@ function runProgram(){
   // Constant Variables
   const FRAME_RATE = 60;
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
-  const BOARD_WIDTH = $("#board").width();
-  const BOARD_HEIGHT = $("#board").height();
-  var score1 = 0
-  var score2 = 0
-  var leftCheck;
-  var rightCheck;
+  const BOARD_WIDTH = $("#board").width(); //no magic numbers!!!!!!
+  const BOARD_HEIGHT = $("#board").height(); // ^^^^^^^^^^
+  var score1 = 0 //setup score
+  var score2 = 0 //setup score
+  var leftCheck; //saving for mixup option
+  var rightCheck; //saving for mixup option
   var winner;
 
 
@@ -32,7 +32,7 @@ function runProgram(){
     S: 83,
   }
 
-  function GameItem(id, speedX, speedY){
+  function GameItem(id, speedX, speedY){ //creates game objects
     var obj = {
       id: id,
       x: parseFloat($(id).css("left")),
@@ -45,9 +45,9 @@ function runProgram(){
     return obj
   }
 
-  var paddleLeft = GameItem("#paddleLeft", 0, 0)
-  var paddleRight = GameItem("#paddleRight", 0, 0)
-  var ball = GameItem("#ball", (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1), (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -3 : 3))
+  var paddleLeft = GameItem("#paddleLeft", 0, 0) //creates left paddle
+  var paddleRight = GameItem("#paddleRight", 0, 0) //creates right paddle
+  var ball = GameItem("#ball", (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1), (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -3 : 3)) //creates ball
 
   // one-time setup
   let interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
@@ -61,7 +61,7 @@ function runProgram(){
   On each "tick" of the timer, a new frame is dynamically drawn using JavaScript
   by calling this function and executing the code inside.
   */
-  function newFrame() {
+  function newFrame() { 
     drawGameItem(paddleLeft);
     updateGameItem(paddleLeft);
     drawGameItem(paddleRight);
@@ -72,6 +72,8 @@ function runProgram(){
     wallCollision(paddleRight);
     ballCollision(ball);
     paddleCollision(ball);
+
+    //all of our functions called each frame >:D
   }
 
 
@@ -85,27 +87,28 @@ function runProgram(){
     } 
     if(event.which === KEY.S){
       paddleLeft.speedY = +5
-    }
+    } //handles right player movements^^
 
     if(event.which === KEY.UP){
       paddleRight.speedY = -5
     } 
     if(event.which === KEY.DOWN){
       paddleRight.speedY = +5
-    }
+    } //handles right player movements^^
 
     if(event.which === KEY.D){
       paddleLeft.speedY = paddleLeft.speedY *2
-    }
+    } //left players dash^^
     if(event.which === KEY.RIGHT){
       paddleRight.speedY = paddleRight.speedY *2
-    }
+    } //right players dash^^
     if(event.which === KEY.A){
       leftCheck = true
+      //checks to see whether or not the mixup (sending the ball the same direction it came from) is active for left player
     }
     if(event.which === KEY.LEFT){
       rightCheck = true
-    }
+    }//checks to see whether or not the mixup (sending the ball the same direction it came from) is active for right player
   }
   
   function handleKeyUp(event) {
@@ -120,13 +123,13 @@ function runProgram(){
     }
     if(event.which === KEY.RIGHT){
       paddleLeft.speedY = 0
-    }
+    }//makes movement stop when releasing a button
     if(event.which === KEY.A){
       leftCheck = false
-    }
+    } //deactivates mixup ^^
     if(event.which === KEY.LEFT){
       rightCheck = false
-    }
+    }//deactivates mixup^^
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -137,12 +140,12 @@ function runProgram(){
   function drawGameItem(obj){
     $(obj.id).css("left", obj.x);
     $(obj.id).css("top", obj.y);
-  }
+  } // draws the game items^^
 
   function updateGameItem(obj){
     obj.x += obj.speedX;
     obj.y += obj.speedY;
-  }
+  } //updates game item speed^^
 
 
 
@@ -153,15 +156,15 @@ function runProgram(){
     
     if(obj.y < 0||obj.y > BOARD_HEIGHT - obj.h ){
       obj.y -= obj.speedY;
-    }
+    }//reverses speed when you hit the board's walls with the paddles
   } 
   
   function ballCollision(obj){
 
     if(obj.y < 0||obj.y > BOARD_HEIGHT - obj.h ){
-      obj.speedY = -1 * obj.speedY
+      obj.speedY = -1 * obj.speedY //reverses balls speed (bounces the ball) when hitting the top or bottom of the board
     } 
-    if(obj.x > BOARD_WIDTH - obj.w || obj.x < 0){
+    if(obj.x > BOARD_WIDTH - obj.w || obj.x < 0){ // resets the ball when hitting the left or right side of the board and updates the score.
       updateScore(ball)
       resetBall(ball);
     } 
@@ -169,28 +172,27 @@ function runProgram(){
 
   function resetBall(obj){
     obj.x = BOARD_WIDTH/2 - obj.w/2
-    obj.y = BOARD_HEIGHT/2 - obj.h/2
+    obj.y = BOARD_HEIGHT/2 - obj.h/2 //resets the ball to center screen when it hits the left or right side of the screen
     obj.speedX = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1)
-
-    obj.speedY = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -3 : 3)
+    obj.speedY = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -3 : 3) //resets ball speed so one player doesn't snowball cuz how fast the ball goes xD
   }
 
   function paddleCollision(obj){
     if(obj.x < paddleLeft.x + paddleLeft.w && obj.y > paddleLeft.y && obj.y < paddleLeft.y + paddleLeft.h && leftCheck === true){
-      obj.speedX = -obj.speedX * 1.2;
-      obj.speedY = -obj.speedY * 1.2;
-      leftCheck = false
+      obj.speedX = -obj.speedX * 1.2; //^^when the ball hits a paddle the ball goes slightly faster
+      obj.speedY = -obj.speedY * 1.2; //obj.speedY  is here so it goes back the same trajectory for a mixup 
+      leftCheck = false //put in place so the mixup doesn't make the ball faze through the paddle D:
     }
     if(obj.x + obj.w > paddleRight.x && obj.y > paddleRight.y && obj.y < paddleRight.y + paddleRight.h && rightCheck === true){
-      obj.speedX = -obj.speedX * 1.2;
-      obj.speedY = -obj.speedY * 1.2;
-      rightCheck = false
+      obj.speedX = -obj.speedX * 1.2;//when the ball hits a paddle the ball goes slightly faster
+      obj.speedY = -obj.speedY * 1.2; //obj.speedY  is here so it goes back the same trajectory for a mixup 
+      rightCheck = false //put in place so the mixup doesn't make the ball faze through the paddle D:
     }
     else if(obj.x < paddleLeft.x + paddleLeft.w && obj.y > paddleLeft.y && obj.y < paddleLeft.y + paddleLeft.h){
-      obj.speedX = -obj.speedX * 1.2;
+      obj.speedX = -obj.speedX * 1.2; //when the ball hits a paddle the ball goes slightly faster
     }
     else if(obj.x + obj.w > paddleRight.x && obj.y > paddleRight.y && obj.y < paddleRight.y + paddleRight.h){
-      obj.speedX = -obj.speedX * 1.2;
+      obj.speedX = -obj.speedX * 1.2;//when the ball hits a paddle the ball goes slightly faster
     }
      } 
 
@@ -198,24 +200,21 @@ function runProgram(){
   function updateScore(obj){
     //GAGE IS REALLY COOL & AWESOME!!
     if(obj.x > BOARD_WIDTH - obj.w){
-      console.log("right");
       score1 = score1 + 1
-      $("#score1").text(score1)
+      $("#score1").text(score1)//updates the score when ball hits the right side of the board
     } if(obj.x < 0 ){
-      console.log("left");
       score2 = score2 + 1
-      $("#score2").text(score2)
+      $("#score2").text(score2) //updates the score when ball hits the right side of the board
     }if(score2 === 10){
       resetBall(ball);
-
-      winner = "Player 2"
-      endGame();
-      showWinnerPopup();
+      winner = "Player 2" //sets the winner to player 2 when score2 is equal to 10
+      endGame();//ends the game
+      winScreen(); //displays win screen
     }if(score1 === 10){
       resetBall(ball);
       winner = "Player 1"
-      endGame();
-      showWinnerPopup();
+      endGame();//ends game
+      winScreen();//shows win screen
     } 
     
   }
@@ -228,9 +227,9 @@ function runProgram(){
     // turn off event handlers
     $(document).off();
   }
-  function showWinnerPopup() {
-    $("#winnerText").text(winner + " wins!");
-    $("#winnerPopup").fadeIn();
+  function winScreen() {
+    $("#winnerText").text(winner + " wins!"); //updates the CSS to display the winner
+    $("#winnerPopup").fadeIn(); // makes the winscreen appear and display the winner.
   }
 
 
